@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Display PDF on Webpage</title>
+  </head>
+  <body>
+    <input type="file" id="fileInput" accept=".pdf" onchange="loadPdf()" />
+    <div id="pdfViewer"></div>
+    <script>
+      function loadPdf() {
+        const file = document.getElementById("fileInput").files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          const pdfViewer = document.getElementById("pdfViewer");
+          pdfViewer.innerHTML = `
+            <embed src="${reader.result}" type="application/pdf" width="800px" height="1000px" />
+          `;
+        };
+      }
+    </script>
+  </body>
+</html>

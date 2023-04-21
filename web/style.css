@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(198, 226, 247);
+}
+
+h1 {
+    color: rgb(13, 7, 190);
+    text-align: center;
+    background-color: white;
+}
+
+/*Navigation css start*/
+ul.navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #234d8d;
+}
+
+li a {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #04001d63;
+}
+/*Navigation css ends*/

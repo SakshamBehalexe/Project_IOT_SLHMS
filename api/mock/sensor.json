@@ -1,0 +1,19 @@
+[
+   {
+   "device_id": "6137e27a364d5a5c5f5b5f5b",
+   "device_name": "QW",
+   "user": "ax",
+   "temperature": 21,
+   "unit": "C",
+   "timestamp":"2023-04-09T10:27:00.000Z"
+},
+{
+   "device_id": "6137e27a364d5a",
+   "device_name": "AB",
+   "user": "UU",
+   "temperature": 12,
+   "unit": "C",
+   "timestamp": "2023-04-09T10:27:00.000Z"
+}
+]
+ 
