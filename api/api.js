@@ -8,6 +8,8 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
+
+
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const crypto = require("crypto");
@@ -48,13 +50,15 @@ app.get("/test", (req, res) =>
 
 app.post("/users", async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const { name, email, password } = req.body;
+    const newUser = new User({ name, email, password });
     await newUser.save();
     res.status(201).send(newUser);
   } catch (err) {
     res.status(400).send(err);
   }
 });
+
 
 // Read all users (GET)
 app.get("/users", async (req, res) => {
@@ -66,59 +70,6 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// Read a user by ID
-app.get("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).send();
-    } else {
-      res.status(200).send(user);
-    }
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-// Update a user by ID
-app.patch("/users/:id", async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ["username", "password", "role"];
-  const isValidUpdate = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-
-  if (!isValidUpdate) {
-    return res.status(400).send({ error: "Invalid updates" });
-  }
-
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).send();
-    } else {
-      updates.forEach((update) => (user[update] = req.body[update]));
-      await user.save();
-      res.status(200).send(user);
-    }
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-// Delete a user by ID
-app.delete("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      res.status(404).send();
-    } else {
-      res.status(200).send(user);
-    }
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
 
 // Start the server
 app.listen(port, () => {

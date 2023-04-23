@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Smart Lecture Hall Management System</title>
+    <link rel="stylesheet" href="assets_3/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets_3/css/Cookie.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets_3/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets_3/css/css/Corporate-Footer-Clean.css">
+    <link rel="stylesheet" href="assets_3/css/css/Hero-Features-Material-Design-Animation.css">
+    <link rel="stylesheet" href="assets_3/css/css/Navbar-Right-Links-icons.css">
+    <link rel="stylesheet" href="assets_3/css/css/Scroll-To-Top.css">
+    <link rel="stylesheet" href="assets_3/css/css/Good-login-dropdown-menu-styles.css">
+    <link rel="stylesheet" href="assets_3/css/css/Good-login-dropdown-menu.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md py-3">
+        <div class="container"><img class="swing animated" src="assets_3/img/logo2.png?h=7be7f2a8f57da910a3d7068e0861b556" width="91" height="30"><img class="swing animated" src="assets_3/img/logo1.png?h=7be7f2a8f57da910a3d7068e0861b556" width="123" height="30"><a class="navbar-brand d-flex align-items-center" href="#"><span class="pulse animated" style="font-size: 20px;"><strong>Smart Lecture Hall Management System</strong></span></a><button data-bs-toggle="collapse" data-bs-target="#navcol-2" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="#tt">Timetable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="flash" href="#BookLH">Book LH</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="py-4 py-xl-5">
+        <section data-aos="fade" id="tt" class="py-4 py-xl-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
+                        <div class="card mb-5" data-bss-hover-animate="bounce">
+                            <div class="card-body p-sm-5" data-aos="fade-down-right">
+                                <h3 class="text-center mb-4">Upload a file for timetable</h3>
+                                <div class="file-upload-wrapper"><input type="file" id="input-file-now" class="file-upload"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-4 py-xl-5">
+            <section data-aos="fade" id="events" class="py-4 py-xl-5">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
+                            <div class="card mb-5" data-bss-hover-animate="bounce">
+                                <div class="card-body p-sm-5" data-aos="fade-down-right">
+                                    <h3 class="text-center mb-4">Upload a file for timetable</h3>
+                                    <div class="file-upload-wrapper"><input type="file" id="input-file-now" class="file-upload"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section class="py-4 py-xl-5">
+                    <section data-aos="fade" id="BookLH" class="py-4 py-xl-5">
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
+                                    <div class="card mb-5" data-bss-hover-animate="bounce">
+                                        <div class="card-body p-sm-5" data-aos="fade-down-right">
+                                            <h3 class="text-center mb-4">Book a Lecture Hall</h3>
+                                            <form method="post">
+                                                <div class="mb-3"><input class="form-control form-control form-control" type="text" id="lh" name="Lecture Hall" placeholder="Lecture Hall no."></div>
+                                                <div class="mb-3"><input class="form-control form-control" type="name" id="teacher name" name="Teacher Name" placeholder="Teacher Name"></div>
+                                                <div class="mb-3"><input class="form-control form-control" type="username" id="course" name="course" placeholder="Course"></div>
+                                                <div class="mb-3"><input class="form-control form-control" type="message" id="message" name="explanation" placeholder="Explanation"></div>
+                                            </form><button class="btn btn-primary d-block w-100" data-bss-hover-animate="tada" type="submit" style="background: rgb(255, 13, 13);"> Send request </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <footer class="page-footer">
+                        <div class="container">
+                            <hr>
+                            <div class="footer-legal"><button type="button" id="scroll-to-top" style="background: rgb(255, 13, 13);"><i class="fas fa-chevron-up"></i></button>
+                                <div class="float-md-end region"></div>
+                                <div class="d-inline-block copyright">
+                                    <p class="d-inline-block" style="font-size: 14px;"> Smart Lecture Hall Management System © Divide And Conquer. All rights reserved. </p>
+                                </div>
+                                <div class="d-inline-block legal-links"></div>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            </section>
+        </section>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets_3/js/bs-init-2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets_3/js/bs-init-1.js"></script>
+    <script src="assets_3/js/bs-init.js"></script>
+</body>
+
+</html>

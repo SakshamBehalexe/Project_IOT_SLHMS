@@ -27,7 +27,7 @@ next();
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-  res.sendFile(`${base}/login.html`);
+  res.sendFile(`${base}/Landing.html`);
 });
 
 app.get('/send-command', (req, res) => {
