@@ -30,10 +30,6 @@ app.get("/", function (req, res) {
   res.sendFile(`${base}/Landing.html`);
 });
 
-app.get('/send-command', (req, res) => {
-  res.sendFile(`${base}/send-command.html`);
-  });
-
 app.get("/student", function (req, res) {
   res.sendFile(`${base}/student.html`);
 });
@@ -42,7 +38,7 @@ app.get("/admin", function (req, res) {
   res.sendFile(`${base}/admin.html`);
 });
 
-app.get("/excel_c", function (req, res) {
+app.get("/ex", function (req, res) {
   res.SendFile(`${base}/excel_c.html`);
 });
 

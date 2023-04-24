@@ -42,12 +42,12 @@ registerForm.addEventListener('submit', (event) => {
   };
 
   // make a POST request to the server to add the user
-  fetch('/api/users', {
+  fetch(`${API_URL}/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify (user)
   })
   .then(response => response.json())
   .then(data => {

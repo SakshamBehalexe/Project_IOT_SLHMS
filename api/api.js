@@ -8,8 +8,6 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-
-
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const crypto = require("crypto");
@@ -67,6 +65,26 @@ app.get("/users", async (req, res) => {
     res.status(200).send(users);
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    // Check if user exists and password is correct
+    if (!user || user.password !== password) {
+      return res.status(401).send('Invalid email or password');
+    }
+
+    // Send success response with user object
+    res.status(200).send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
