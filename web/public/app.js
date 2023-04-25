@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5004/api';
+// const API_URL = 'http://localhost:5004/api';
 const MQTT_URL = 'http://localhost:5008/send-command';
     
     // Get references to the input and table container elements
