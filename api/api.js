@@ -13,6 +13,7 @@ const upload = multer({ storage });
 const app = express();
 const mqtt = require('mqtt');
 const cors = require('cors');
+
 mongoose.connect("mongodb+srv://armaan:armaan@cluster0.paruxml.mongodb.net/SmartLectureHall", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(err));
@@ -93,7 +94,6 @@ const bookingSchema = new mongoose.Schema({
 const Booking = mongoose.model('Booking', bookingSchema);
 
 
-
 app.get("/test", (req, res) => {
   res.send("Hello World!");
 });
@@ -146,6 +146,53 @@ app.post('/bookings', upload.single('pdfFile'), async (req, res) => {
   }
 });
 
+
+const excelSchema = new mongoose.Schema({
+  excelFile: {
+    data: Buffer,
+    contentType: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Excel = mongoose.model('Excel', excelSchema);
+
+app.post('/timetable', upload.single('file'), async (req, res) => {
+  try {
+    const newExcel = new Excel({
+      excelFile: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype
+      }
+    });
+
+    const excel = await newExcel.save();
+    console.log('Excel file saved successfully:', excel);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/timetable', async (req, res) => {
+  try {
+    const excel = await Excel.findOne().sort('-createdAt').exec();
+    if (!excel) {
+      res.status(404).send('No excel file found');
+    } else {
+      res.setHeader('Content-Type', excel.excelFile.contentType);
+      res.setHeader('Content-Disposition', 'attachment; filename=' + 'timetable.xlsx');
+      res.send(excel.excelFile.data);
+    }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
 
 // Logout endpoint
 app.get('/logout', (req, res) => {

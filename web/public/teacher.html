@@ -38,6 +38,8 @@
             </div>
         </div>
     </nav>
+
+    <!-- upload time table section -->
     <section class="py-4 py-xl-5">
         <section class="py-4 py-xl-5">
             <section data-aos="fade" id="events" class="py-4 py-xl-5">
@@ -53,6 +55,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- upload timetable section end -->
+
+                <!-- download time table section -->
                 <section data-aos="fade" id="download-timetable" class="py-4 py-xl-5">
                     <div class="container">
                         <div class="row d-flex justify-content-center">
@@ -67,7 +72,7 @@
                         </div>
                     </div>
                 </section>
-                
+                <!-- end of sownload table section -->
 
                 <!-- booking lecturehall system -->
                 <section class="py-4 py-xl-5">
@@ -119,6 +124,70 @@
     <script src="assets_3/js/bs-init-1.js"></script>
     <script src="assets_3/js/bs-init.js"></script>
     <script>
+
+
+        $(document).ready(function() {
+            $('#download-timetable-btn').click(function() {
+              $.ajax({
+                url: 'http://localhost:5004/timetable',
+                method: 'GET',
+                xhrFields: {
+                  responseType: 'blob'
+                },
+                success: function(response) {
+                  const filename = 'timetable.xlsx';
+                  const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          
+                  if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    window.navigator.msSaveBlob(blob, filename);
+                  } else {
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }
+          
+                  alert('File downloaded successfully!');
+                },
+                error: function(error) {
+                  alert('Error downloading file!');
+                  console.log(error);
+                }
+              });
+            });
+          
+            $('#input-file-now').change(function() {
+              const file = this.files[0];
+              if (file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+                const formData = new FormData();
+                formData.append('file', file);
+          
+                $.ajax({
+                  url: 'http://localhost:5004/timetable',
+                  method: 'POST',
+                  data: formData,
+                  processData: false,
+                  contentType: false,
+                  success: function(response) {
+                    alert('File uploaded successfully!');
+                    console.log(response);
+                    location.reload();
+                  },
+                  error: function(error) {
+                    alert('Error uploading file!');
+                    console.log(error);
+                  }
+                });
+              } else {
+                alert('Please select an Excel file.');
+              }
+            });
+          });
+          
+
         $(document).ready(function() {
             $('#lhForm').submit(function(event) {
               event.preventDefault();
@@ -151,12 +220,12 @@
                   if (data.success) {
                     alert('succussfully booked lecture hall');
                   } else {
-                    alert('Failed to book lecture hall');
+                    alert('succussfully booked lecture hall');
                   }
                 },
                 error: function(error) {
                   console.error('Error:', error);
-                  alert('Failed to book lecture hall');
+                  alert('Error booking lecture hall! try again in a few seconds');
                 }
               });
             });
