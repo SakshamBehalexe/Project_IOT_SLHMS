@@ -5,6 +5,10 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcrypt');
+
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 // const User = require("./model/user/user");
 const app = express();
 const mqtt = require('mqtt');
@@ -58,6 +62,36 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// Schema and Model for Lecture Hall Bookings
+const bookingSchema = new mongoose.Schema({
+  lh: {
+    type: String,
+    required: true
+  },
+  teacherName: {
+    type: String,
+    required: true
+  },
+  course: {
+    type: String,
+    required: true
+  },
+  explanation: {
+    type: String,
+    required: true
+  },
+  pdfFile: {
+    data: Buffer,
+    contentType: String
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Booking = mongoose.model('Booking', bookingSchema);
+
 
 
 app.get("/test", (req, res) => {
@@ -97,6 +131,19 @@ app.post('/login', (req, res) => {
       console.error(err);
       return res.status(500).send({ message: 'Internal server error.' });
     });
+});
+
+app.post('/bookings', upload.single('pdfFile'), async (req, res) => {
+  const { lh, teacherName, course, explanation } = req.body;
+  const pdfFile = { data: req.file.buffer, contentType: req.file.mimetype };
+
+  try {
+    const booking = await Booking.create({ lh, teacherName, course, explanation, pdfFile });
+    res.status(201).json(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
 });
 
 

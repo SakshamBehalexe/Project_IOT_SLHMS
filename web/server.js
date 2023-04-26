@@ -34,6 +34,10 @@ app.get("/student", function (req, res) {
   res.sendFile(`${base}/student.html`);
 });
 
+app.get("/pdf", function (req, res) {
+  res.sendFile(`${base}/pdf.html`);
+});
+
 app.get("/admin", function (req, res) { 
   res.sendFile(`${base}/admin.html`);
 });

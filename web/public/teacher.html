@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets_3/css/css/Scroll-To-Top.css">
     <link rel="stylesheet" href="assets_3/css/css/Good-login-dropdown-menu-styles.css">
     <link rel="stylesheet" href="assets_3/css/css/Good-login-dropdown-menu.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -38,20 +39,6 @@
         </div>
     </nav>
     <section class="py-4 py-xl-5">
-        <section data-aos="fade" id="tt" class="py-4 py-xl-5">
-            <div class="container">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
-                        <div class="card mb-5" data-bss-hover-animate="bounce">
-                            <div class="card-body p-sm-5" data-aos="fade-down-right">
-                                <h3 class="text-center mb-4">Upload a file for timetable</h3>
-                                <div class="file-upload-wrapper"><input type="file" id="input-file-now" class="file-upload"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="py-4 py-xl-5">
             <section data-aos="fade" id="events" class="py-4 py-xl-5">
                 <div class="container">
@@ -66,26 +53,48 @@
                         </div>
                     </div>
                 </div>
-                <section class="py-4 py-xl-5">
-                    <section data-aos="fade" id="BookLH" class="py-4 py-xl-5">
-                        <div class="container">
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
-                                    <div class="card mb-5" data-bss-hover-animate="bounce">
-                                        <div class="card-body p-sm-5" data-aos="fade-down-right">
-                                            <h3 class="text-center mb-4">Book a Lecture Hall</h3>
-                                            <form method="post">
-                                                <div class="mb-3"><input class="form-control form-control form-control" type="text" id="lh" name="Lecture Hall" placeholder="Lecture Hall no."></div>
-                                                <div class="mb-3"><input class="form-control form-control" type="name" id="teacher name" name="Teacher Name" placeholder="Teacher Name"></div>
-                                                <div class="mb-3"><input class="form-control form-control" type="username" id="course" name="course" placeholder="Course"></div>
-                                                <div class="mb-3"><input class="form-control form-control" type="message" id="message" name="explanation" placeholder="Explanation"></div>
-                                            </form><button class="btn btn-primary d-block w-100" data-bss-hover-animate="tada" type="submit" style="background: rgb(255, 13, 13);"> Send request </button>
-                                        </div>
+                <section data-aos="fade" id="download-timetable" class="py-4 py-xl-5">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
+                                <div class="card mb-5" data-bss-hover-animate="bounce">
+                                    <div class="card-body p-sm-5" data-aos="fade-down-right">
+                                        <h3 class="text-center mb-4">Download Latest Timetable</h3>
+                                        <button class="btn btn-primary" id="download-timetable-btn">Download</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+                
+
+                <!-- booking lecturehall system -->
+                <section class="py-4 py-xl-5">
+                    <section data-aos="fade" id="BookLH" class="py-4 py-xl-5">
+                      <div class="container">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4" data-bss-hover-animate="bounce">
+                            <div class="card mb-5" data-bss-hover-animate="bounce">
+                              <div class="card-body p-sm-5" data-aos="fade-down-right">
+                                <h3 class="text-center mb-4">Book a Lecture Hall</h3>
+                                <form id="lhForm" enctype="multipart/form-data">
+                                  <div class="mb-3"><input class="form-control form-control form-control" type="text" id="lh" name="lh" placeholder="Lecture Hall no."></div>
+                                  <div class="mb-3"><input class="form-control form-control" type="name" id="teacherName" name="teacherName" placeholder="Teacher Name"></div>
+                                  <div class="mb-3"><input class="form-control form-control" type="username" id="course" name="course" placeholder="Course"></div>
+                                  <div class="mb-3"><input class="form-control form-control" type="message" id="explanation" name="explanation" placeholder="Explanation"></div>
+                                  <div class="mb-3"><input class="form-control form-control" type="file" id="pdfFile" name="pdfFile"></div>
+                                  <button class="btn btn-primary d-block w-100" data-bss-hover-animate="tada" type="submit" style="background: rgb(255, 13, 13);"> Send request </button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </section>
+                  </section>              
+                  <!-- end of booking lecture hall system -->
+
                     <footer class="page-footer">
                         <div class="container">
                             <hr>
@@ -109,6 +118,51 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="assets_3/js/bs-init-1.js"></script>
     <script src="assets_3/js/bs-init.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#lhForm').submit(function(event) {
+              event.preventDefault();
+              const lh = $('#lh').val();
+              const teacherName = $('#teacherName').val();
+              const course = $('#course').val();
+              const explanation = $('#explanation').val();
+              const pdfFile = $('#pdfFile').prop('files')[0];
+              
+              // Check if any field is empty
+              if (lh.trim() === '' || teacherName.trim() === '' || course.trim() === '' || explanation.trim() === '' || !pdfFile) {
+                alert('Please fill in all the fields and attach a PDF file.');
+                return false;
+              }
+              
+              const formData = new FormData();
+              formData.append('lh', lh);
+              formData.append('teacherName', teacherName);
+              formData.append('course', course);
+              formData.append('explanation', explanation);
+              formData.append('pdfFile', pdfFile);
+              $.ajax({
+                url: 'http://localhost:5004/bookings',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                timeout: 10000, // Set timeout to 10 seconds
+                success: function(data) {
+                  if (data.success) {
+                    alert('succussfully booked lecture hall');
+                  } else {
+                    alert('Failed to book lecture hall');
+                  }
+                },
+                error: function(error) {
+                  console.error('Error:', error);
+                  alert('Failed to book lecture hall');
+                }
+              });
+            });
+          });
+          
+    </script>
 </body>
 
 </html>
