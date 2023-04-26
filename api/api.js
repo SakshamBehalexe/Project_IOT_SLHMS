@@ -5,6 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcrypt');
+const router = express.Router();
 
 const multer = require('multer');
 const storage = multer.memoryStorage();
@@ -39,11 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const port = 5004;
-
-
-// CRUD endpoints for User model
-// Create a new user
-
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -97,6 +93,19 @@ const Booking = mongoose.model('Booking', bookingSchema);
 app.get("/test", (req, res) => {
   res.send("Hello World!");
 });
+
+// Define API route for getting the most recent booking
+app.get('/bookings/recent', async (req, res) => {
+  try {
+    const booking = await Booking.findOne({}).sort({ createdDate: -1 }).exec();
+    res.json(booking);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error retrieving booking from database.');
+  }
+});
+
+
 
 app.post("/users", async (req, res) => {
   try {
@@ -178,6 +187,64 @@ app.post('/timetable', upload.single('file'), async (req, res) => {
   }
 });
 
+// Define the feedback schema
+const feedbackSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  message: String
+});
+
+// Define the feedback model
+const Feedback = mongoose.model('Feedback', feedbackSchema);
+
+// Handle the POST request to /feedback
+app.post('/feedback', async (req, res) => {
+  try {
+    // Create a new feedback object from the request body
+    const feedback = new Feedback({
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message
+    });
+
+    // Save the feedback object to the database
+    await feedback.save();
+
+    res.send('Feedback saved');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error saving feedback');
+  }
+});
+
+// Get the three most recent bookings
+app.get('/bookings', async function(req, res) {
+	try {
+		const bookings = await Booking.find().sort({createdDate: -1}).limit(3).exec();
+		res.send(bookings);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send('Error retrieving bookings');
+	}
+});
+
+app.get('/pdf/:bookingId', async function(req, res) {
+  try {
+    const booking = await Booking.findById(req.params.bookingId);
+    if (!booking || !booking.pdfFile || booking.pdfFile.contentType !== 'application/pdf') {
+      res.status(404).send('PDF not found');
+      return;
+    }
+    res.contentType('application/pdf');
+    res.send(booking.pdfFile.data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving PDF');
+  }
+});
+
+
+
 app.get('/timetable', async (req, res) => {
   try {
     const excel = await Excel.findOne().sort('-createdAt').exec();
@@ -193,6 +260,12 @@ app.get('/timetable', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+
+
+
+
+
 
 // Logout endpoint
 app.get('/logout', (req, res) => {

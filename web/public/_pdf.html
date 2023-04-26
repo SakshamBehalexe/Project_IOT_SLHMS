@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lecture Hall Bookings</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1>Lecture Hall Bookings</h1>
+	<div id="bookings"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- <script src="/app.js"></script> -->
+</body>
+</html>
+
+
+
+<script>
+    const API_URL = 'http://localhost:5004';
+    $(document).ready(() => {
+        $.get(`http://localhost:5004/bookings`, (data) => {
+          let html = '';
+          data.slice(0, 3).forEach((booking) => {
+            html += '<div>';
+            html += '<h3>' + booking.lh + '</h3>';
+            html += '<p>Teacher: ' + booking.teacherName + '</p>';
+            html += '<p>Course: ' + booking.course + '</p>';
+            html += '<p>' + booking.explanation + '</p>';
+            if (booking.pdfFile && booking.pdfFile.contentType === 'application/pdf') {
+              html += '<embed src="/pdf/' + booking._id + '" type="application/pdf" width="100%" height="600px">';
+            }
+            html += '</div>';
+          });
+          $('#bookings').html(html);
+        });
+      });
+      
+</script>

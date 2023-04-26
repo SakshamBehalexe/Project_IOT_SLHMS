@@ -30,6 +30,10 @@ app.get("/", function (req, res) {
   res.sendFile(`${base}/Landing.html`);
 });
 
+app.get("/pdf", function (req, res) {
+  res.sendFile(`${base}/_pdf.html`);
+});
+
 app.get("/student", function (req, res) {
   res.sendFile(`${base}/student.html`);
 });
