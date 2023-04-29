@@ -261,12 +261,6 @@ app.get('/timetable', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
 // Logout endpoint
 app.get('/logout', (req, res) => {
   req.logout((err) => {

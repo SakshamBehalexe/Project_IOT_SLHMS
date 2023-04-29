@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://armaan:armaan@cluster0.paruxml.mongodb.net/Sensor?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://armaan:armaan@cluster0.paruxml.mongodb.net/Sensor", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(err));
 
@@ -28,16 +28,42 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const statusSchema = new mongoose.Schema({
+  status: {
+    type: Boolean,
+    required: true
+  },
+
+  createdDate: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Status = mongoose.model('slhms_status', statusSchema);
+
 //schema for temperature
-
 const Temperature = mongoose.model('Temperature', new mongoose.Schema({
-  id: String,
-  name: String,
-  location: String,
-  temperature: Number
-}, { collection : 'Temperature_1' }));
 
-const client = mqtt.connect("mqtt://broker.hivemq.com:1883");
+  tempValue: {
+     type: Number
+   },
+  HumValue: {
+     type: Number
+   },
+   recordedAt: {
+     type: Date,
+     default: Date.now
+
+   }}, { collection : 'Temperature_2' }));
+
+
+
+   const client = mqtt.connect("mqtt://broker.hivemq.com:1883");
+
+app.get('/testing', async (req, res) => {
+  res.send("Testing");
+});
 
 client.on('connect', () => { 
   console.log('MQTT connected');
@@ -45,37 +71,21 @@ client.on('connect', () => {
 
 const port = 5008;
 
-// Connect to MQTT broker
-client.on('connect', function () {
-  console.log('Connected to MQTT broker');
-
-  // Subscribe to the "temp_slhms" topic
-  client.subscribe('temp_slhms', function (err) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('Subscribed to the "temp_slhms" topic');
-    }
-  });
-});
-
 client.on('message', async (topic, message)=> {
-  if (topic === 'temp_slhms') {
+  if (topic === "temp_slhm") {
     console.log(`Received message on topic "${topic}": ${message.toString()}`);
-    
     // Parse the message payload
     const data = JSON.parse(message);
 
     // Save temperature data to MongoDB using Mongoose
     const newTemperature = new Temperature({
-      id: data.device_id,
-      name: data.name,
-      location: data.location,
-      temperature: data.temperature
+      tempValue: data.temperature,
+      HumValue: data.humidity,
+      recordedAt: Date.now()
     });
 
     try {
-      await newTemperature.save({ writeConcern: { w: "majority" }, timeout: 20000 });
+      await newTemperature.save();
       console.log(`Temperature data saved to MongoDB`);
     } catch (err) {
       console.error(`Error saving temperature data to MongoDB: ${err}`);
@@ -84,8 +94,7 @@ client.on('message', async (topic, message)=> {
       }
     }
   }
-});
-
+}); 
 
 app.listen(port, () => { 
   console.log(`listening on port ${port}`);

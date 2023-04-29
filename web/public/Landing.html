@@ -491,7 +491,6 @@
                       Login
                     </button>
                   </div>
-                  <p class="text-muted">Forgot your password?</p>
                 </form>
               </div>
             </div>
@@ -548,16 +547,16 @@
           }
       
           const hasNumbers = /\d/.test(formData.email);
-          const url = hasNumbers ? 'http://localhost:3000/student' : 'http://localhost:3000/teacher';
+          const url_2 = hasNumbers ? 'http://localhost:3000/student' : 'http://localhost:3000/teacher';
       
           $.ajax({
             type: 'POST',
-            url: 'http://localhost:5004/login',
+            url: 'http://localhost:3000/login',
             data: formData,
             success: (response) => {
               if (response.status === 200) {
                 alert('Login successful');
-                window.location.href = url;
+                window.location.href = url_2;
               } else {
                 alert('Login failed');
               }

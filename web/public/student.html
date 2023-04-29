@@ -474,6 +474,13 @@ $.get('/bookings', function(bookings) {
           const email = $('#email-2').val();
           const message = $('#message-2').val();
       
+          // Check if any field is empty
+          if (name === '' || email === '' || message === '') {
+            // Display an alert message
+            alert('Please fill out all fields before submitting the feedback.');
+            return; // Stop further execution of the code
+          }
+      
           // Send the data to the server
           $.ajax({
             type: 'POST',
