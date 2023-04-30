@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lecture Hall Status</title>
+	<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+	<style>
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			margin: 20px;
+		}
+
+		.icon-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 10px;
+			cursor: pointer;
+		}
+
+		.icon {
+			font-size: 3em;
+			margin-bottom: 10px;
+		}
+
+		.icon-label {
+			font-size: 1.2em;
+		}
+
+		.toggle-container {
+			display: flex;
+			align-items: center;
+			margin: 20px;
+		}
+
+		.toggle-label {
+			margin-right: 10px;
+			font-size: 1.2em;
+		}
+
+		.toggle-switch {
+			position: relative;
+			display: inline-block;
+			width: 60px;
+			height: 34px;
+		}
+
+		.toggle-switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.toggle-slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			transition: .4s;
+		}
+
+		.toggle-slider:before {
+			position: absolute;
+			content: "";
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			background-color: white;
+			transition: .4s;
+		}
+
+		input:checked + .toggle-slider {
+			background-color: #2196F3;
+		}
+
+		input:focus + .toggle-slider {
+			box-shadow: 0 0 1px #2196F3;
+		}
+
+		input:checked + .toggle-slider:before {
+			transform: translateX(26px);
+		}
+
+		/* Rounded sliders */
+		.toggle-slider.round {
+			border-radius: 34px;
+		}
+
+		.toggle-slider.round:before {
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="icon-container" onclick="toggleStatus('1')">
+			<i class="fas fa-chalkboard-teacher icon"></i>
+			<span class="icon-label">Lecture Hall 1</span>
+		</div>
+		<div class="icon-container" onclick="toggleStatus('2')">
+			<i class="fas fa-chalkboard-teacher icon"></i>
+			<span class="icon-label">Lecture Hall 2</span>
+		</div>
+		<!-- add more icon containers for more lecture halls -->
+	</div>
+	<div class="toggle-container">
+		<label class="toggle-label">Toggle Status:</label>
+		<label class="toggle-switch round">
+            <input type="checkbox" onchange="handleToggle(this)">
+            <span class="toggle-slider round"></span>
+            </label>
+            </div>
+            <script>
+                // MQTT broker host, port and topic
+                const brokerHost = 'mqtt://test.mosquitto.org';
+                const brokerPort = 8081;
+                const topic = 'lecture-hall-status';
+            
+                // MQTT client instance
+                const client = mqtt.connect(`${brokerHost}:${brokerPort}`);
+            
+                // Callback function to execute on connection established
+                client.on('connect', function () {
+                    // Subscribe to topic
+                    client.subscribe(topic, function (err) {
+                        if (!err) {
+                            console.log(`Subscribed to topic: ${topic}`);
+                        } else {
+                            console.error(`Error subscribing to topic: ${topic}`, err);
+                        }
+                    });
+                });
+            
+                // Callback function to execute on receiving message
+                client.on('message', function (topic, message) {
+                    // Parse message payload
+                    const payload = JSON.parse(message.toString());
+            
+                    // Update lecture hall status icon
+                    updateStatus(payload.lectureHall, payload.status);
+                });
+            
+                // Function to toggle lecture hall status
+                function toggleStatus(lectureHall) {
+                    // Prompt user to confirm toggle action
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `Do you want to toggle the status of Lecture Hall ${lectureHall}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Publish toggle action to MQTT broker
+                            client.publish(topic, JSON.stringify({
+                                lectureHall: lectureHall,
+                                status: 'occupied'
+                            }));
+                        }
+                    });
+                }
+            
+                // Function to handle toggle switch change
+                function handleToggle(checkbox) {
+                    // Publish all lecture halls status to MQTT broker
+                    const lectureHalls = ['1', '2']; // add more lecture hall numbers if needed
+                    const status = checkbox.checked ? 'occupied' : 'vacant';
+                    for (let i = 0; i < lectureHalls.length; i++) {
+                        client.publish(topic, JSON.stringify({
+                            lectureHall: lectureHalls[i],
+                            status: status
+                        }));
+                    }
+                }
+            
+                // Function to update lecture hall status icon
+                function updateStatus(lectureHall, status) {
+                    const iconContainer = $(`.icon-container:nth-child(${lectureHall})`);
+                    const icon = iconContainer.find('.icon');
+                    const iconLabel = iconContainer.find('.icon-label');
+                    if (status === 'occupied') {
+                        icon.removeClass('fa-chalkboard-teacher');
+                        icon.addClass('fa-user-graduate');
+                        iconLabel.text(`Lecture Hall ${lectureHall} - Occupied`);
+                    } else if (status === 'vacant') {
+                        icon.removeClass('fa-user-graduate');
+                        icon.addClass('fa-chalkboard-teacher');
+                        iconLabel.text(`Lecture Hall ${lectureHall} - Vacant`);
+                    }
+                }
+            </script>
+        </body>
+        </html>            

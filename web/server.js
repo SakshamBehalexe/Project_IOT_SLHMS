@@ -34,6 +34,14 @@ app.get("/", function (req, res) {
   res.sendFile(`${base}/Landing.html`);
 });
 
+app.get("/admin", function (req, res) {
+  res.sendFile(`${base}/administrator.html`);
+});
+
+app.get("/occupancy", function (req, res) {
+  res.sendFile(`${base}/occupancy.html`);
+});
+
 app.get("/pdf", function (req, res) {
   res.sendFile(`${base}/_pdf.html`);
 });
@@ -42,24 +50,25 @@ app.get("/student", function (req, res) {
   res.sendFile(`${base}/student.html`);
 });
 
-app.get("/pdf", function (req, res) {
-  res.sendFile(`${base}/pdf.html`);
-});
-
-app.get("/admin", function (req, res) { 
-  res.sendFile(`${base}/admin.html`);
-});
 
 app.get("/ex", function (req, res) {
-  res.SendFile(`${base}/excel_c.html`);
+  res.sendFile(`${base}/excel_c.html`);
 });
 
 app.get("/teacher", function (req, res) {
   res.sendFile(`${base}/teacher.html`);
 });
 
+app.get("/feedback", function (req, res) {
+  res.sendFile(`${base}/feedback.html`);
+});
+
 app.get("/prot", isAuthenticated,function (req, res) {
   res.send('yoo protected');
+});
+
+app.get("/coordinator", function (req, res) {
+  res.sendFile(`${base}/coordinator.html`);
 });
 
 app.post('/login', 

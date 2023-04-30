@@ -137,13 +137,12 @@
       </div>
     </nav>
     <!--Navigation Bar ends-->
-
 <!--Timetable section starts-->
 <section class="py-4 py-xl-5">
-  <section id="Timetable" class="mt-4">
+  <section id="Timetable" class="mt-4" data-aos="fade-up">
     <div class="container-fluid">
       <div class="row">
-        <div class="col">
+        <div class="col" data-bss-hover-animate="bounce">
           <div class="card shadow">
             <div class="card-header py-2">
               <p class="lead text-info m-0">
@@ -152,7 +151,8 @@
             </div>
             <div class="card-body">
               <div class="text-center">
-                <button class="btn btn-primary" onclick="displayTimetable()">Display</button>
+                <button class="btn btn-primary" onclick="displayTimetable()" data-bss-hover-animate="tada">Display</button>
+                <button class="btn btn-primary" onclick="downloadTimetable()" data-bss-hover-animate="tada">Download</button>
               </div>
             </div>
           </div>
@@ -162,129 +162,30 @@
   </section>
 </section>
 
-  <!--Timetable section ends-->
-
-      <!--Events section starts-->
-      <section
-        data-aos="fade"
-        id="Events"
-        class="py-4 py-xl-5"
-        style="
-          border-top-left-radius: 1.5px;
-          border-top-right-radius: 1.5px;
-          border-bottom-right-radius: 1.5px;
-          border-bottom-left-radius: 1.5px;
-        "
-      >
-        <section class="py-5">
-          <h3 class="text-center">Upcoming Events</h3>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6 col-lg-4">
-                <div class="card-container-imagia">
-                  <div class="card-imagia">
-                    <div class="front-imagia">
-                      <div class="user-imagia">
-                      </div>
-                      <div
-                        class="footer-imagia w-100 text-secondary position-absolute text-center py-2"
-                      >
-                        <span><i class="fa fa-plus"></i> More info</span>
-                      </div>
-                    </div>
-                    <div class="back-imagia">
-                      <div class="d-flex align-items-center h-100 px-3">
-                        <div>
-                          <h3 class="text-center">Description</h3>
-                          <p class="text-center" style="text-align: center">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Quisquam, quod.
-                          </p>
-                        </div>
-                      </div>
-                      <div
-                        class="footer-imagia w-100 text-secondary position-absolute text-center py-2"
-                      >
-                        <div class="social-imagia text-center">
-                          <a class="m-2" href="#"
-                            ><i class="fa fa-facebook"></i></a
-                          ><a class="m-2" href="#"
-                            ><i class="fa fa-linkedin"></i></a
-                          ><a class="m-2" href="#"
-                            ><i class="fa fa-twitter"></i
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div class="col-md-6 col-lg-4">
-                <div class="card-container-imagia">
-                  <div class="card-imagia">
-                    <div class="front-imagia">
-                      <div class="cover-imagia">
-                        <img
-                          class="w-100"
-                          alt=""
-                          src="https://unsplash.it/720/500?image=1067"
-                        />
-                      </div>
-                      <div class="user-imagia">
-                        <img
-                          class="rounded-circle"
-                          alt=""
-                          src="https://unsplash.it/120/120?image=64"
-                        />
-                      </div>
-                      <div class="py-1 px-3 text-center">
-                        <h5 class="text-capitalize m-0">Paris</h5>
-                        <p class="text-secondary mb-3">Miss Emily</p>
-                        <p>
-                            <em
-                            ><strong>Venue: Faraday Hall</strong
-                            ><br />&nbsp;Time: 11am to 12pm
-                          </em>
-                        </p>
-                      </div>
-                      <div
-                        class="footer-imagia w-100 text-secondary position-absolute text-center py-2"
-                      >
-                        <span><i class="fa fa-plus"></i> More info</span>
-                      </div>
-                    </div>
-                    <div class="back-imagia">
-                      <div class="d-flex align-items-center h-100 px-3">
-                        <div>
-                          <h3 class="text-center">Event 3</h3>
-                          <p class="text-center">More about event2/speaker2</p>
-                        </div>
-                      </div>
-                      <div
-                        class="footer-imagia w-100 text-secondary position-absolute text-center py-2"
-                      >
-                        <div class="social-imagia text-center">
-                          <a class="m-2" href="#"
-                            ><i class="fa fa-facebook"></i></a
-                          ><a class="m-2" href="#"
-                            ><i class="fa fa-linkedin"></i></a
-                          ><a class="m-2" href="#"
-                            ><i class="fa fa-twitter"></i
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!--Events display section starts-->
+<section class="py-4 py-xl-5">
+  <section id="Events" class="mt-4" data-aos="fade-down">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow" data-bss-hover-animate="pulse">
+            <div class="card-header py-2">
+              <p class="lead text-info m-0">
+                <strong>Click to Display the latest events</strong>
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="text-center">
+                <button class="btn btn-primary" onclick="displayEvents()" data-bss-hover-animate="tada">Display</button>
               </div>
             </div>
           </div>
-        </section>
-        </section>
-        <!--Events section ends-->
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
 
         <!--Feedback section starts-->
         <section id="Feedback">
@@ -391,6 +292,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="assets_4/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script>
+      function displayEvents() {
+        // Code to display events goes here
+        window.location.href = "/pdf"; // Redirect to /pdf
+      }
+    </script>
     <script>
       // Make a GET request to the server API to retrieve booking data
 $.get('/bookings', function(bookings) {

@@ -1,50 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Administrator Page</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-kdIVJpHN/Gw1l/Wx1l+MLRgAeyP7mz9mJ2gU6qrMrUzcz1UHwLxyaVo5df5pd1Yn" crossorigin="anonymous">
-  <!-- Custom CSS -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Administrator Page</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Lecture Hall Assignment</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Add New User</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="container my-5">
-    <h1 class="text-center mb-4">Welcome to the Administrator Page</h1>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <a href="#" class="btn btn-primary btn-lg btn-block">Lecture Hall Assignment Web Page</a>
-      </div>
-      <div class="col-md-6 mb-3">
-        <a href="#" class="btn btn-success btn-lg btn-block">Add New User</a>
-      </div>
-    </div>
-  </div>
-  <script src="app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BNquLuNn+Wn2QUCNzdjPyrFlGXsZ/C7j+j0zYZGkjvvVNBdxYzkj0dVX9lSzTl7V" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Smart Lecture Hall Management System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="assets_4/fonts/fontawesome5-overrides.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="assets_4/css/Corporate-Footer-Clean.css" />
+    <link
+      rel="stylesheet"
+      href="assets_4/css/Hero-Features-Material-Design-Animation.css"
+    />
+    <link rel="stylesheet" href="assets_4/css/Navbar-Right-Links-icons.css" />
+    <link rel="stylesheet" href="assets_4/css/Scroll-To-Top.css" />
+    <link
+      rel="stylesheet"
+      href="assets_4/css/-Team-Rotating-Cards-BS4--Team-with-rotating-cards.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css"
+    />
+    <link rel="stylesheet" href="assets_4/css/x-dropdown.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  </head>
 
-</body>
+  <body>
+    <!--Navigation Bar starts-->
+    <nav class="navbar navbar-light navbar-expand-md py-3">
+      <div class="container">
+        <img
+          class="swing animated"
+          src="assets_4/img/logo2.png"
+          width="91"
+          height="30"
+        /><img
+          class="swing animated"
+          src="assets_4/img/logo1.png"
+          width="123"
+          height="30"
+        /><a class="navbar-brand d-flex align-items-center" href="#"
+          ><span class="pulse animated" style="font-size: 20px"
+            ><strong>Smart Lecture Hall Management System</strong></span
+          ></a
+        ><button
+          data-bs-toggle="collapse"
+          data-bs-target="#navcol-2"
+          class="navbar-toggler"
+        >
+          <span class="visually-hidden">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-2">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-bss-hover-animate="wobble"
+                href="#Timetable"
+                style="color: rgba(0, 0, 0, 0.9)"
+                >TimeTable</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-bss-hover-animate="wobble"
+                href="#Events"
+                style="--bs-body-color: #00050a; color: rgba(0, 0, 0, 0.9)"
+                >Events</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                data-bss-hover-animate="wobble"
+                href="/feedback"
+                style="
+                  --bs-body-color: #212529;
+                  color: rgb(255, 255, 255);
+                  background: rgb(255, 13, 13);
+                  border-radius: 0.5px;
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                  border-bottom-left-radius: 0px;
+                "
+                >Feedback Received</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                data-bss-hover-animate="wobble"
+                href="/occupancy"
+                style="
+                  --bs-body-color: #212529;
+                  color: rgb(255, 255, 255);
+                  background: rgb(255, 13, 13);
+                  border-radius: 0.5px;
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                  border-bottom-left-radius: 0px;
+                "
+                >Occupancy</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Navigation Bar ends-->
+<!--Timetable section starts-->
+<section class="py-4 py-xl-5">
+  <section id="Timetable" class="mt-4" data-aos="fade-up">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col" data-bss-hover-animate="bounce">
+          <div class="card shadow">
+            <div class="card-header py-2">
+              <p class="lead text-info m-0">
+                <strong>Click to Display the latest timetable</strong>
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="text-center">
+                <button class="btn btn-primary" onclick="displayTimetable()" data-bss-hover-animate="tada">Display</button>
+                <button class="btn btn-primary" onclick="downloadTimetable()" data-bss-hover-animate="tada">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!--Events display section starts-->
+<section class="py-4 py-xl-5">
+  <section id="Events" class="mt-4" data-aos="fade-down">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow" data-bss-hover-animate="pulse">
+            <div class="card-header py-2">
+              <p class="lead text-info m-0">
+                <strong>Click to Display the latest events</strong>
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="text-center">
+                <button class="btn btn-primary" onclick="displayEvents()" data-bss-hover-animate="tada">Display</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+        <!--Feedback section starts-->
+        <section id="Feedback">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div
+              class="col-md-8 col-lg-6 col-xl-5 col-xxl-4"
+              data-bss-hover-animate="bounce"
+            >
+              <div class="card mb-5" data-bss-hover-animate="bounce">
+                <div class="card-body p-sm-5" data-aos="fade-down-right">
+                  <h3 class="text-center mb-4" data-aos="zoom-out">
+                    We value your Feedback!
+                  </h3>
+                  <form method="post">
+                    <div class="mb-3">
+                      <input
+                        class="form-control form-control"
+                        type="text"
+                        id="name-2"
+                        name="name"
+                        placeholder="Name"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <input
+                        class="form-control form-control"
+                        type="email"
+                        id="email-2"
+                        name="email"
+                        placeholder="Email"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <textarea
+                        class="form-control form-control"
+                        id="message-2"
+                        name="message"
+                        rows="6"
+                        placeholder="Give your honest feedback and share if you have any grievances"
+                        style="padding-bottom: 0px"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <button
+                        class="btn btn-primary d-block w-100"
+                        data-bss-hover-animate="tada"
+                        type="submit"
+                        style="background: rgb(255, 13, 13)"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+      <!--Feedback section ends-->
+
+      <!--Footer-->
+      <footer class="page-footer">
+        <div class="container">
+          <hr />
+          <div class="footer-legal">
+            <!--Scroll to top button-->
+            <button
+              type="button"
+              id="scroll-to-top"
+              style="background: rgb(255, 13, 13)"
+              onclick="window.scrollTo(0,0)"           >
+              <i class="fas fa-chevron-up" role="button"></i>
+            </button>
+            
+            <div class="float-md-end region"></div>
+            <div class="d-inline-block copyright">
+              <p class="d-inline-block" style="font-size: 14px">
+                Smart Lecture Hall Management System © Divide And Conquer. All
+                rights reserved.
+              </p>
+            </div>
+            <div class="d-inline-block legal-links"></div>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets_4/js/bs-init-1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets_4/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script>
+      function displayEvents() {
+        // Code to display events goes here
+        window.location.href = "/pdf"; // Redirect to /pdf
+      }
+    </script>
+    <script>
+      // Make a GET request to the server API to retrieve booking data
+$.get('/bookings', function(bookings) {
+  // Loop through the bookings and create a card for each one
+  const cardContainer = $('.card-container-imagia');
+  bookings.forEach(booking => {
+    // Create the front of the card with the booking details
+    const front = $('<div>').addClass('front-imagia');
+    front.html(`
+      <div class="user-imagia">
+        <h3>${booking.course}</h3>
+        <p>Teacher: ${booking.teacherName}</p>
+        <p>Lecture hall: ${booking.lh}</p>
+      </div>
+      <div class="footer-imagia w-100 text-secondary position-absolute text-center py-2">
+        <span><i class="fa fa-plus"></i> More info</span>
+      </div>
+    `);
+    // Create the back of the card with the booking explanation and PDF file if available
+    const back = $('<div>').addClass('back-imagia');
+    back.html(`
+      <div class="d-flex align-items-center h-100 px-3">
+        <div>
+          <h3 class="text-center">Description</h3>
+          <p class="text-center" style="text-align: center">${booking.explanation}</p>
+          ${booking.pdfFile ? `<a href="data:${booking.pdfFile.contentType};base64,${booking.pdfFile.data.toString('base64')}" target="_blank">View PDF</a>` : ''}
+        </div>
+      </div>
+      <div class="footer-imagia w-100 text-secondary position-absolute text-center py-2">
+        <div class="social-imagia text-center">
+          <a class="m-2" href="#"><i class="fa fa-facebook"></i></a>
+          <a class="m-2" href="#"><i class="fa fa-linkedin"></i></a>
+          <a class="m-2" href="#"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+    `);
+    // Create the card element and add it to the container
+    const card = $('<div>').addClass('card-imagia');
+    card.append(front);
+    card.append(back);
+    cardContainer.append(card);
+  });
+})
+.fail(function(error) {
+  console.log(error);
+});
+
+      
+
+
+      function displayTimetable() {
+        fetch('http://localhost:5004/timetable')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.arrayBuffer();
+          })
+          .then(buffer => {
+            const data = new Uint8Array(buffer);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const html = XLSX.utils.sheet_to_html(worksheet);
+            document.getElementById('Timetable').innerHTML = html;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to display timetable');
+          });
+      }
+      
+
+      $(document).ready(() => {
+        $('form').submit((event) => {
+          // Prevent the form from submitting normally
+          event.preventDefault();
+      
+          // Extract the data from the form
+          const name = $('#name-2').val();
+          const email = $('#email-2').val();
+          const message = $('#message-2').val();
+      
+          // Check if any field is empty
+          if (name === '' || email === '' || message === '') {
+            // Display an alert message
+            alert('Please fill out all fields before submitting the feedback.');
+            return; // Stop further execution of the code
+          }
+      
+          // Send the data to the server
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5004/feedback',
+            data: {
+              name,
+              email,
+              message
+            },
+            success: (data) => {
+              // Display a success message
+              alert('Feedback submitted successfully!');
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+              // Display an error message
+              alert('Error submitting feedback: ' + textStatus + ' ' + errorThrown);
+            }
+          });
+        });
+      });
+      
+      
+      </script>
+      
+    </script>
+  </body>
 </html>

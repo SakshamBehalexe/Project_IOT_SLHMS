@@ -26,19 +26,115 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md py-3">
-        <div class="container"><img class="swing animated" src="assets_3/img/logo2.png?h=7be7f2a8f57da910a3d7068e0861b556" width="91" height="30"><img class="swing animated" src="assets_3/img/logo1.png?h=7be7f2a8f57da910a3d7068e0861b556" width="123" height="30"><a class="navbar-brand d-flex align-items-center" href="#"><span class="pulse animated" style="font-size: 20px;"><strong>Smart Lecture Hall Management System</strong></span></a><button data-bs-toggle="collapse" data-bs-target="#navcol-2" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="#tt">Timetable</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
-                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="flash" href="#BookLH">Book LH</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <nav class="navbar navbar-light navbar-expand-md py-3">
+    <div class="container">
+      <img class="swing animated" src="assets_3/img/logo2.png?h=7be7f2a8f57da910a3d7068e0861b556" width="91" height="30">
+      <img class="swing animated" src="assets_3/img/logo1.png?h=7be7f2a8f57da910a3d7068e0861b556" width="123" height="30">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <span class="pulse animated" style="font-size: 20px;">
+          <strong>Smart Lecture Hall Management System</strong>
+        </span>
+      </a>
+      <button data-bs-toggle="collapse" data-bs-target="#navcol-2" class="navbar-toggler">
+        <span class="visually-hidden">Toggle navigation</span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-2">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tt">Timetable</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pdf">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" data-bss-hover-animate="flash" href="#BookLH">
+              Book LH
+              <span class="glow-ball"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" data-bss-hover-animate="flash" href="/feedback">
+              Feedbacks Received
+              <span class="glow-ball"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  <style>
+    .glow-ball {
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      opacity: 0;
+      transition: all 0.3s ease-out;
+      z-index: -1;
+    }
+
+    .nav-link:hover .glow-ball,
+    .nav-link:focus .glow-ball,
+    .nav-link:active .glow-ball,
+    .nav-link.active .glow-ball {
+      transform: scale(8);
+      opacity: 1;
+    }
+
+    .pulse.animated {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .swing.animated {
+      animation: swing 1s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes swing {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      20% {
+        transform: rotate(15deg);
+      }
+
+      40% {
+        transform: rotate(-10deg);
+      }
+
+      60% {
+        transform: rotate(5deg);
+      }
+
+      80%{
+        transform: rotate(-5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    </style>      
     <!-- upload time table section -->
     <section class="py-4 py-xl-5">
         <section class="py-4 py-xl-5">

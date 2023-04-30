@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Feedback Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Feedback Data</h1>
+    <table id="feedback-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Resolved</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="location.href='/teacher'">Go back to teacher page</button>
+    <script>
+      $(document).ready(() => {
+        $.ajax({
+          url: "http://localhost:5004/feedback",
+          type: "GET",
+          success: (data) => {
+            const feedbackTable = $("#feedback-table tbody");
+            data.forEach((feedback) => {
+              const row = $("<tr>");
+              row.append($("<td>").text(feedback.name));
+              row.append($("<td>").text(feedback.email));
+              row.append($("<td>").text(feedback.message));
+              const deleteButton = $("<button>").text("Resolved");
+              deleteButton.click(() => {
+                $.ajax({
+                  url: `http://localhost:5004/feedback/${feedback._id}`,
+                  type: "DELETE",
+                  success: () => {
+                    row.remove();
+                  },
+                  error: (xhr, status, error) => {
+                    console.error(error);
+                  },
+                });
+              });
+              row.append($("<td>").append(deleteButton));
+              feedbackTable.append(row);
+            });
+          },
+          error: (xhr, status, error) => {
+            console.error(error);
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

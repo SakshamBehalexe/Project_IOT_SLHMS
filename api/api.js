@@ -217,6 +217,33 @@ app.post('/feedback', async (req, res) => {
   }
 });
 
+// Handle GET request to /feedback to retrieve all feedback data
+app.get('/feedback', async (req, res) => {
+  try {
+    const feedback = await Feedback.find();
+    res.json(feedback);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving feedback');
+  }
+});
+
+// Handle DELETE request to /feedback/:id to delete a specific feedback
+app.delete('/feedback/:id', async (req, res) => {
+  try {
+    const feedback = await Feedback.findByIdAndDelete(req.params.id);
+    if (!feedback) {
+      return res.status(404).send('Feedback not found');
+    }
+    res.send('Feedback deleted');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting feedback');
+  }
+});
+
+
+
 // Get the three most recent bookings
 app.get('/bookings', async function(req, res) {
 	try {
