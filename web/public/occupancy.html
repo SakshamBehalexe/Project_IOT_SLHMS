@@ -137,7 +137,6 @@
                         if (!response.ok) {
                           throw new Error('published status');
                         }
-                        // update UI based on status
                         const toggleLabel = document.querySelector('.toggle-label');
                         toggleLabel.innerText = `Toggle Status (${status})`;
                   
