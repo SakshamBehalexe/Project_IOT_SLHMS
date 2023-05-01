@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        margin-top: 0;
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+      }
+      table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        background-color: white;
+      }
+      th,
+      td {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      td button {
+        background-color: #dc3545;
+        border: none;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+      }
+      td button:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="user-list">
+      </tbody>
+    </table>
+    <script>
+      // Client-side code to fetch user data from the server and populate the table using AJAX
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const users = JSON.parse(this.responseText);
+          const userList = document.getElementById('user-list');
+          users.forEach(user => {
+            const row = document.createElement('tr');
+            const nameCell = document.createElement('td');
+            const emailCell = document.createElement('td');
+            const passwordCell = document.createElement('td');
+            const deleteCell = document.createElement('td');
+            const deleteButton = document.createElement('button');
+            nameCell.innerText = user.name;
+            emailCell.innerText = user.email;
+            passwordCell.innerText = user.password;
+            deleteButton.innerText = 'Delete';
+            deleteButton.addEventListener('click', () => {
+              const xhrDelete = new XMLHttpRequest();
+              xhrDelete.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                  row.remove();
+                }
+              };
+              xhrDelete.open('DELETE', `http://localhost:5004/users/${user._id}`, true);
+              xhrDelete.send();
+            });
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(nameCell);
+            row.appendChild(emailCell);
+            row.appendChild(passwordCell);
+            row.appendChild(deleteCell);
+            userList.appendChild(row);
+          });
+        }
+      };
+      xhr.open('GET', 'http://localhost:5004/users', true);
+      xhr.send();
+    </script>
+  </body>
+</html>

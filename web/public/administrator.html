@@ -83,14 +83,14 @@
           height="30"
         /><a class="navbar-brand d-flex align-items-center" href="#"
           ><span class="pulse animated" style="font-size: 20px"
-            ><strong>Smart Lecture Hall Management System</strong></span
+            ><strong> Smart Lecture Hall Management System </strong></span
           ></a
         ><button
           data-bs-toggle="collapse"
           data-bs-target="#navcol-2"
           class="navbar-toggler"
         >
-          <span class="visually-hidden">Toggle navigation</span
+          <span class="visually-hidden"> Toggle navigation </span
           ><span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navcol-2">
@@ -136,11 +136,29 @@
               <a
                 class="nav-link active"
                 data-bss-hover-animate="wobble"
+                href="/manageUser"
+                style="
+                  --bs-body-color: #212529;
+                  color: rgb(255, 255, 255);
+                  background: rgb(49, 255, 13);
+                  border-radius: 0.5px;
+                  border-top-left-radius: 0px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                  border-bottom-left-radius: 0px;
+                "
+                >Manage Users</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                data-bss-hover-animate="wobble"
                 href="/occupancy"
                 style="
                   --bs-body-color: #212529;
                   color: rgb(255, 255, 255);
-                  background: rgb(255, 13, 13);
+                  background: rgb(13, 235, 255);
                   border-radius: 0.5px;
                   border-top-left-radius: 0px;
                   border-top-right-radius: 0px;
@@ -170,7 +188,7 @@
             <div class="card-body">
               <div class="text-center">
                 <button class="btn btn-primary" onclick="displayTimetable()" data-bss-hover-animate="tada">Display</button>
-                <button class="btn btn-primary" onclick="downloadTimetable()" data-bss-hover-animate="tada">Download</button>
+                <button class="btn btn-primary" id="download-timetable-btn">Download</button>
               </div>
             </div>
           </div>
@@ -317,55 +335,8 @@
       }
     </script>
     <script>
-      // Make a GET request to the server API to retrieve booking data
-$.get('/bookings', function(bookings) {
-  // Loop through the bookings and create a card for each one
-  const cardContainer = $('.card-container-imagia');
-  bookings.forEach(booking => {
-    // Create the front of the card with the booking details
-    const front = $('<div>').addClass('front-imagia');
-    front.html(`
-      <div class="user-imagia">
-        <h3>${booking.course}</h3>
-        <p>Teacher: ${booking.teacherName}</p>
-        <p>Lecture hall: ${booking.lh}</p>
-      </div>
-      <div class="footer-imagia w-100 text-secondary position-absolute text-center py-2">
-        <span><i class="fa fa-plus"></i> More info</span>
-      </div>
-    `);
-    // Create the back of the card with the booking explanation and PDF file if available
-    const back = $('<div>').addClass('back-imagia');
-    back.html(`
-      <div class="d-flex align-items-center h-100 px-3">
-        <div>
-          <h3 class="text-center">Description</h3>
-          <p class="text-center" style="text-align: center">${booking.explanation}</p>
-          ${booking.pdfFile ? `<a href="data:${booking.pdfFile.contentType};base64,${booking.pdfFile.data.toString('base64')}" target="_blank">View PDF</a>` : ''}
-        </div>
-      </div>
-      <div class="footer-imagia w-100 text-secondary position-absolute text-center py-2">
-        <div class="social-imagia text-center">
-          <a class="m-2" href="#"><i class="fa fa-facebook"></i></a>
-          <a class="m-2" href="#"><i class="fa fa-linkedin"></i></a>
-          <a class="m-2" href="#"><i class="fa fa-twitter"></i></a>
-        </div>
-      </div>
-    `);
-    // Create the card element and add it to the container
-    const card = $('<div>').addClass('card-imagia');
-    card.append(front);
-    card.append(back);
-    cardContainer.append(card);
-  });
-})
-.fail(function(error) {
-  console.log(error);
-});
 
-      
-
-
+    
       function displayTimetable() {
         fetch('http://localhost:5004/timetable')
           .then(response => {
@@ -426,7 +397,41 @@ $.get('/bookings', function(bookings) {
           });
         });
       });
-      
+
+
+$(document).ready(function() {
+  $('#download-timetable-btn').click(function() {
+    $.ajax({
+      url: 'http://localhost:5004/timetable',
+      method: 'GET',
+      xhrFields: {
+        responseType: 'blob'
+      },
+      success: function(response) {
+        const filename = 'timetable.xlsx';
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        if (typeof window.navigator.msSaveBlob !== 'undefined') {
+          window.navigator.msSaveBlob(blob, filename);
+        } else {
+          const downloadUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+
+        alert('File downloaded successfully!');
+      },
+      error: function(error) {
+        alert('Error downloading file!');
+        console.log(error);
+      }
+    });
+  });
+});
       
       </script>
       

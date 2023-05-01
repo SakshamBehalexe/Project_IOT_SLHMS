@@ -71,6 +71,10 @@ app.get("/coordinator", function (req, res) {
   res.sendFile(`${base}/coordinator.html`);
 });
 
+app.get("/manageUser", function (req, res) {
+  res.sendFile(`${base}/manageUsers.html`);
+});
+
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
