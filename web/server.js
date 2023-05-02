@@ -59,6 +59,10 @@ app.get("/teacher", function (req, res) {
   res.sendFile(`${base}/teacher.html`);
 });
 
+app.get("/pdf_d", function (req, res) {
+  res.sendFile(`${base}/pdf_delete.html`);
+});
+
 app.get("/feedback", function (req, res) {
   res.sendFile(`${base}/feedback.html`);
 });
@@ -74,12 +78,6 @@ app.get("/coordinator", function (req, res) {
 app.get("/manageUser", function (req, res) {
   res.sendFile(`${base}/manageUsers.html`);
 });
-
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
 // Handle all other routes with a 404 page
 app.get("*", function (req, res) {
   res.sendFile(`${base}/404.html`);

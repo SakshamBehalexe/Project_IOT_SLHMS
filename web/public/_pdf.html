@@ -99,8 +99,8 @@
         // Get the three most recent bookings
         const bookings = await $.get(`${API_URL}/bookings`);
     
-        // Clear the loader
-        $('#bookings').empty();
+        // Clear the loader and create the table
+        $('#bookings').empty().append('<table><thead><tr><th>LH name</th><th>Teacher</th><th>Date</th><th>Description</th><th>Course name</th><th>PDF Download</th></tr></thead><tbody></tbody></table>');
     
         // Loop through each booking
         for (const booking of bookings) {
@@ -116,37 +116,28 @@
           // Create a blob URL for the PDF file
           const url = URL.createObjectURL(pdfData);
     
-          const link = $('<a>', {
-            href: url,
-            download: `booking_${booking._id}.pdf`,
-            text: `Download Booking ${booking._id}`
-          });
-            // Create HTML for the booking information
-  const bookingInfo = $('<div>', { class: 'booking-info' })
-    .append($('<div>', { class: 'booking-label', text: 'LH name:' }))
-    .append($('<div>', { class: 'booking-value', text: booking.lh }))
-    .append($('<div>', { class: 'booking-label', text: 'Teacher' }))
-    .append($('<div>', { class: 'booking-value', text: booking.teacherName }))
-    .append($('<div>', { class: 'booking-label', text: 'Date' }))
-    .append($('<div>', { class: 'booking-value', text: new Date(booking.createdDate).toLocaleDateString() }))
-    .append($('<div>', { class: 'booking-label', text: 'Description' }))
-    .append($('<div>', { class: 'booking-value', text: booking.explanation }))
-    .append($('<div>', { class: 'booking-label', text: 'Course name' }))
-    .append($('<div>', { class: 'booking-value', text: booking.course }))
-    .append($('<div>', { class: 'booking-label', text: 'PDF Download:' }))
-    .append(link);
-
-  // Create HTML for the booking
-  const bookingHTML = $('<div>', { class: 'booking' })
-    .append(bookingInfo);
-
-  // Add the booking to the page
-  $('#bookings').append(bookingHTML);
-}
-} catch (error) {
-  console.error(error);
-  }
-  });
+          // Create the row for the current booking
+          const row = $('<tr>');
+    
+          // Add columns for each piece of data
+          const lhNameCol = $('<td>', { text: booking.lh });
+          const teacherCol = $('<td>', { text: booking.teacherName });
+          const dateCol = $('<td>', { text: new Date(booking.createdDate).toLocaleDateString() });
+          const descriptionCol = $('<td>', { text: booking.explanation });
+          const courseNameCol = $('<td>', { text: booking.course });
+          const pdfDownloadCol = $('<td>').append($('<a>', { class: 'booking-link', href: url, text: 'Download PDF' }));
+    
+          // Append columns to the row
+          row.append(lhNameCol, teacherCol, dateCol, descriptionCol, courseNameCol, pdfDownloadCol);
+    
+          // Add the row to the table
+          $('#bookings table tbody').append(row);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    
   </script>
   <button onclick="location.href='/student';">Back to Student Page</button>
   </body>

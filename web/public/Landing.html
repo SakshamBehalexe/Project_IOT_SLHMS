@@ -203,7 +203,7 @@
           <div class="carousel-item active">
             <img
               class="d-block w-100"
-              src="https://placeholder.pics/svg/1024x500/FF9E00"
+              src="assets/img/slide1.jpeg"
               alt="..."
             />
             <div class="d-none d-md-block carousel-caption">
@@ -266,7 +266,7 @@
         <div
           style="
             height: 600px;
-            background: url('https://cdn.bootstrapstudio.io/placeholders/1400x800.png')
+            background: url('assets/img/about.jpg')
               center / cover;
           "
         ></div>
@@ -298,11 +298,16 @@
                       ></path>
                     </svg>
                   </div>
+                  <img
+                  class="d-block w-100"
+                  src="/assets/img/bhatia.jpeg"
+                  alt="..."
+                />
                   <h4 class="card-title">Gaurish Bhatia</h4>
                   <h6 class="text-muted card-subtitle mb-2">
-                    Backend Developer
+                    Hardware Engineer
                   </h6>
-                  <p class="card-text">He worked on..</p>
+                  <p class="card-text">Guarish Bhatia handled the hardware for our project. He gave his best efforts to ensure that the project was functional and reliable. Guarish made sure that every component of the hardware was tested thoroughly, and he spent many sleepless nights troubleshooting issues to prove his dedication to the project's success. His technical expertise and his contributions to the project were irreplaceable. Guarish's commitment to excellence and willingness to go the extra mile to ensure the project's success were evident.</p>
                 </div>
               </div>
               <div class="card">
@@ -324,11 +329,16 @@
                       ></path>
                     </svg>
                   </div>
+                  <img
+                  class="d-block w-100"
+                  src="/assets/img/random.JPG"
+                  alt="..."
+                />
                   <h4 class="card-title">Mehak</h4>
                   <h6 class="text-muted card-subtitle mb-2">
                     Front-end Developer
                   </h6>
-                  <p class="card-text">She worked in..</p>
+                  <p class="card-text">Mehak played the role of frontend developer for our project. She ensured that there were no miscommunications among team members. She kept everyone updated about each other's progress, ensuring that the project was on track and completed within the deadline. Additionally, with her creative ideas she always tried to go above and beyond to make the project more innovative and visually appealing. Her attention to detail and dedication to quality were evident in every aspect of her work.</p>
                 </div>
               </div>
             </div>
@@ -355,11 +365,16 @@
                       ></path>
                     </svg>
                   </div>
+                  <img
+                  class="d-block w-100"
+                  src="/assets/img/behal.jpg"
+                  alt="..."
+                />
                   <h4 class="card-title">Saksham Behal</h4>
                   <h6 class="text-muted card-subtitle mb-2">
                     Backend Developer
                   </h6>
-                  <p class="card-text">He worked on..</p>
+                  <p class="card-text">Saksham Behal was the backend developer for our project. He played a vital role in the success of our project. He was always available to provide constant support and guidance to the front-end team and hardware team. His contribution to the project was invaluable, and he made sure that the backend of the project was robust and efficient. Saksham's dedication, hard work, and passion for technology were evident in everything he did.</p>
                 </div>
               </div>
               <div class="card">
@@ -382,9 +397,14 @@
                       ></path>
                     </svg>
                   </div>
+                  <img
+                  class="d-block w-100"
+                  src="/assets/img/random.JPG"
+                  alt="..."
+                />
                   <h4 class="card-title">Krish</h4>
                   <h6 class="text-muted card-subtitle mb-2">Coordinator</h6>
-                  <p class="card-text">He worked on..</p>
+                  <p class="card-text">Krish played a critical role in the successful physical deployment of the hardware components of our project. He made sure that the hardware was installed and configured correctly. In addition, He also helped with documentation throughout the project, ensuring that all aspects of the hardware deployment were well-documented and easily accessible to the rest of the team. Krish's dedication and hard work were greatly appreciated by all members of our team.</p>
                 </div>
               </div>
             </div>
@@ -414,11 +434,16 @@
                       ></path>
                     </svg>
                   </div>
+                  <img
+                  class="d-block w-100"
+                  src="/assets/img/cheetal.jpeg"
+                  alt="..."
+                />
                   <h4 class="card-title">Armaan Chetal</h4>
                   <h6 class="text-muted card-subtitle mb-2">
-                    Database manager
+                    Github Documentation
                   </h6>
-                  <p class="card-text">He worked on..</p>
+                  <p class="card-text">Armaan Chetal played the role of a researcher for our project. He worked closely with both the backend and hardware teams, providing valuable insights and research to inform the project's development. His research was instrumental in helping the teams identify the most effective solutions to their respective challenges.</p>
                 </div>
               </div>
             </div>
@@ -532,41 +557,34 @@
     <script src="assets/js/bs-init.js"></script>
     <script>
 
-      $(document).ready(() => {
-        // login form client side code
-        $('#login-button').click((event) => {
+      $(document).ready(function() {
+        $('#login-button').click(function(event) {
           event.preventDefault();
-          const formData = {
-            name: $('#name').val(),
-            email: $('#email').val(),
-            password: $('#password').val(),
-          };
-          if (!formData.name || !formData.email || !formData.password) {
-            alert('Please fill in all fields');
-            return;
-          }
-      
-          const hasNumbers = /\d/.test(formData.email);
-          const url_2 = hasNumbers ? 'http://localhost:3000/student' : 'http://localhost:3000/teacher';
-      
+          const name = $('#name').val();
+          const email = $('#email').val();
+          const password = $('#password').val();
+          // Check if email has digits
+          const hasDigits = /\d/.test(email);
+          const url = hasDigits ? '/student' : '/teacher'; // Set the redirect URL based on email
           $.ajax({
             type: 'POST',
-            url: 'http://localhost:3000/login',
-            data: formData,
-            success: (response) => {
-              if (response.status === 200) {
-                alert('Login successful');
-                window.location.href = url_2;
-              } else {
-                alert('Login failed');
-              }
+            url: 'http://localhost:5004/login',
+            data: {
+              name: name,
+              email: email,
+              password: password
             },
-            error: (error) => {
-              alert(error.responseJSON.message);
+            success: function(data) {
+              window.location.href = url; // Redirect to the appropriate page
             },
+            error: function(xhr, status, error) {
+              console.error(error);
+              alert('Incorrect username or password. Please try again.');
+            }
           });
         });
       });
+      
       
       
 

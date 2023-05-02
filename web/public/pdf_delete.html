@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List of Bookings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+    <style>
+      /* General styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      h1 {
+        margin-bottom: 1em;
+        text-align: center;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 1em auto;
+        width: 100%;
+        max-width: 800px;
+      }
+      th, td {
+        padding: 0.5em;
+        border: 1px solid #ccc;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 0.25em;
+        padding: 0.5em 1em;
+        margin: 1em 0.5em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #0062cc;
+      }
+      /* Animations */
+      .delete-button {
+        position: relative;
+      }
+      .delete-button:hover:before {
+        content: "Delete";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.5);
+        font-size: 1.5em;
+        color: #dc3545;
+        opacity: 0.7;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .delete-button:hover:after {
+        content: "Are you sure?";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        font-size: 0.8em;
+        color: #dc3545;
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .delete-button:hover:before, .delete-button:hover:after {
+        pointer-events: none;
+      }
+      .delete-button:hover:hover:before {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 1;
+      }
+      .delete-button:hover:hover:after {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      /* Media queries */
+      @media screen and (max-width: 600px) {
+        table {
+          font-size: 0.8em;
+        }
+        button {
+          font-size: 0.8em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>List of Bookings
+    </h1>
+    <table>
+      <thead>
+        <tr>
+          <th>LH</th>
+          <th>Teacher Name</th>
+          <th>Course</th>
+          <th>Explanation</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="bookingsTableBody"></tbody>
+    </table>
+    <button onclick="goBack()">Back to Student Page</button>
+    <button onclick="location.href='/teacher'">Go back to teacher page</button>
+    <button onclick="location.href='/admin'">Go back to admin page</button>
+    <script>
+        function loadBookings() {
+            $.ajax({
+              url: 'http://localhost:5004/bookings/all',
+              type: 'GET',
+              success: function(bookings) {
+                const bookingsTableBody = $('#bookingsTableBody');
+                bookingsTableBody.html('');
+                $.each(bookings, function(index, booking) {
+                  const tr = $('<tr>');
+                  tr.html(`
+                    <td>${booking.lh}</td>
+                    <td>${booking.teacherName}</td>
+                    <td>${booking.course}</td>
+                    <td>${booking.explanation}</td>
+                    <td><button class="deleteButton" data-id="${booking._id}">Delete</button></td>
+                  `);
+                  bookingsTableBody.append(tr);
+                });
+              },
+              error: function(xhr, status, error) {
+                console.error(error);
+                alert('Failed to load bookings!');
+              }
+            });
+          }
+        
+          $(document).on('click', '.deleteButton', function() {
+            const id = $(this).data('id');
+            Swal.fire({
+              title: 'Are you sure?',
+              text: 'You will not be able to recover this booking!',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete it!',
+              cancelButtonText: 'No, keep it'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $.ajax({
+                  url: `http://localhost:5004/bookings/${id}`,
+                  type: 'DELETE',
+                  success: function() {
+                    Swal.fire('Deleted!', 'Your booking has been deleted.', 'success').then(() => {
+                      loadBookings();
+                    });
+                  },
+                  error: function(xhr, status, error) {
+                    console.error(error);
+                    Swal.fire('Error!', 'Failed to delete the booking.', 'error');
+                  }
+                });
+              }
+            });
+          });
+        
+          $(document).on('click', '#goBackButton', function() {
+            window.location.href = '/student';
+          });
+        
+          loadBookings();
+    </script>
+  </body>
+</html>

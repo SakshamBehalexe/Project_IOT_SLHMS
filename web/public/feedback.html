@@ -4,16 +4,53 @@
     <title>Feedback Data</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      table {
+        margin: 0 auto;
+        width: 80%;
         border-collapse: collapse;
+        border: 1px solid #ddd;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        background-color: white;
       }
       th,
       td {
-        padding: 10px;
+        border: 1px solid #ddd;
         text-align: left;
+        padding: 10px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #ff4000;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      button:hover {
+        background-color: #3e8e41;
       }
     </style>
   </head>
@@ -31,6 +68,7 @@
       <tbody></tbody>
     </table>
     <button onclick="location.href='/teacher'">Go back to teacher page</button>
+    <button onclick="location.href='/admin'">Go back to admin page</button>
     <script>
       $(document).ready(() => {
         $.ajax({
@@ -43,7 +81,7 @@
               row.append($("<td>").text(feedback.name));
               row.append($("<td>").text(feedback.email));
               row.append($("<td>").text(feedback.message));
-              const deleteButton = $("<button>").text("Resolved");
+              const deleteButton = $("<button>").text("Delete");
               deleteButton.click(() => {
                 $.ajax({
                   url: `http://localhost:5004/feedback/${feedback._id}`,

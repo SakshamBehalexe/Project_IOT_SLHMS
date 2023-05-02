@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require('bcrypt');
-const router = express.Router();
+
 
 const multer = require('multer');
 const storage = multer.memoryStorage();
@@ -57,7 +55,7 @@ const userSchema = new mongoose.Schema({
   },
 }, { collection : 'User_1' });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User_1", userSchema);
 
 // Schema and Model for Lecture Hall Bookings
 const bookingSchema = new mongoose.Schema({
@@ -143,19 +141,22 @@ app.delete("/users/:id", async (req, res) => {
 });
 
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({ email, password })
-    .then(user => {
-      if (!user) {
-        return res.status(401).send({ message: 'Incorrect username or password. Please try again.' });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      return res.status(500).send({ message: 'Internal server error.' });
-    });
+app.post('/login', async (req, res) => {
+  const { name, email, password } = req.body;
+  try {
+    const user = await User.findOne({ name, email, password });
+    if (!user) {
+      return res.status(401).send({ message: 'Incorrect username, email or password. Please try again.' });
+    }
+    // If the user is found, you can add code here to create a session or token
+    // and send it back in the response
+    return res.status(200).send({ message: 'User logged in successfully.' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: 'Internal server error.' });
+  }
 });
+
 
 app.post('/bookings', upload.single('pdfFile'), async (req, res) => {
   const { lh, teacherName, course, explanation } = req.body;
@@ -169,6 +170,24 @@ app.post('/bookings', upload.single('pdfFile'), async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
+app.delete('/bookings/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const booking = await Booking.findById(id);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    await Booking.deleteOne({ _id: id });
+    res.status(200).json({ message: 'Booking deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
 
 
 const excelSchema = new mongoose.Schema({
@@ -270,6 +289,17 @@ app.get('/bookings', async function(req, res) {
 	}
 });
 
+// Get all bookings
+app.get('/bookings/all', async (req, res) => {
+  try {
+    const bookings = await Booking.find().sort({createdDate: -1}).exec();
+    res.send(bookings);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving bookings');
+  }
+});
+
 app.get('/pdf/:bookingId', async function(req, res) {
   try {
     const booking = await Booking.findById(req.params.bookingId);
@@ -309,7 +339,7 @@ app.get('/logout', (req, res) => {
     if (err) {
       return res.status(500).send(err);
     }
-    res.status(200).send('Logged out successfully');
+    res.redirect('/'); // Redirect to landing page
   });
 });
 

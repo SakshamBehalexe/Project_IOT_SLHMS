@@ -6,119 +6,126 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Y2OoOghM9Xb6pKk7rrTDq3Fd5Vw8u1ogp3ZG+Hq3cE/Sv8X1WlRBSnQTLz+oYvK8klfWtfrPZsC/Uf4Gv4StXQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<style>
-		.container {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			margin: 20px;
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f9f9f9;
 		}
-
-		.icon-container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin: 10px;
-			cursor: pointer;
-		}
-
-		.icon {
-			font-size: 3em;
-			margin-bottom: 10px;
-		}
-
-		.icon-label {
-			font-size: 1.2em;
-		}
-
-		.toggle-container {
-			display: flex;
-			align-items: center;
-			margin: 20px;
-		}
-
-		.toggle-label {
-			margin-right: 10px;
-			font-size: 1.2em;
-		}
-
-		.toggle-switch {
-			position: relative;
-			display: inline-block;
-			width: 60px;
-			height: 34px;
-		}
-
-		.toggle-switch input {
-			opacity: 0;
-			width: 0;
-			height: 0;
-		}
-
-		.toggle-slider {
-			position: absolute;
-			cursor: pointer;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: #ccc;
-			transition: .4s;
-		}
-
-		.toggle-slider:before {
-			position: absolute;
-			content: "";
-			height: 26px;
-			width: 26px;
-			left: 4px;
-			bottom: 4px;
-			background-color: white;
-			transition: .4s;
-		}
-
-		input:checked + .toggle-slider {
-			background-color: #2196F3;
-		}
-
-		input:focus + .toggle-slider {
-			box-shadow: 0 0 1px #2196F3;
-		}
-
-		input:checked + .toggle-slider:before {
-			transform: translateX(26px);
-		}
-
-		/* Rounded sliders */
-		.toggle-slider.round {
-			border-radius: 34px;
-		}
-
-		.toggle-slider.round:before {
-			border-radius: 50%;
-		}
-	</style>
-</head>
-<body>
-	<div class="container">
-		<div class="icon-container" onclick="toggleStatus('1')">
-			<i class="fas fa-chalkboard-teacher icon"></i>
-			<span class="icon-label">Lecture Hall 1</span>
+			.container {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				margin: 20px;
+			}
+		
+			.icon-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin: 10px;
+				cursor: pointer;
+			}
+		
+			.icon {
+				font-size: 3em;
+				margin-bottom: 10px;
+			}
+		
+			.icon-label {
+				font-size: 1.2em;
+			}
+		
+			.toggle-container {
+				display: flex;
+				align-items: center;
+				margin: 20px;
+			}
+		
+			.toggle-label {
+				margin-right: 10px;
+				font-size: 1.2em;
+			}
+		
+			.toggle-switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 34px;
+			}
+		
+			.toggle-switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+		
+			.toggle-slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				transition: .4s;
+			}
+		
+			.toggle-slider:before {
+				position: absolute;
+				content: "";
+				height: 26px;
+				width: 26px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				transition: .4s;
+			}
+		
+			input:checked + .toggle-slider {
+				background-color: #2196F3;
+			}
+		
+			input:focus + .toggle-slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+		
+			input:checked + .toggle-slider:before {
+				transform: translateX(26px);
+			}
+		
+			/* Rounded sliders */
+			.toggle-slider.round {
+				border-radius: 34px;
+			}
+		
+			.toggle-slider.round:before {
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="icon-container" onclick="toggleStatus('1')">
+				<i class="fas fa-chalkboard-teacher icon"></i>
+				<span class="icon-label">Lecture Hall 1</span>
+			</div>
+			<div class="icon-container" onclick="toggleStatus('2')">
+				<i class="fas fa-chalkboard-teacher icon"></i>
+				<span class="icon-label">Lecture Hall 2</span>
+			</div>
+			<!-- add more icon containers for more lecture halls -->
 		</div>
-		<div class="icon-container" onclick="toggleStatus('2')">
-			<i class="fas fa-chalkboard-teacher icon"></i>
-			<span class="icon-label">Lecture Hall 2</span>
-		</div>
-		<!-- add more icon containers for more lecture halls -->
-	</div>
-	<div class="toggle-container">
-		<label class="toggle-label">Toggle Status:</label>
-		<label class="toggle-switch round">
-            <input type="checkbox" onchange="handleToggle(this)">
-            <span class="toggle-slider round"></span>
-            </label>
-            </div>
+		<div class="toggle-container">
+			<label class="toggle-label">Toggle Status:</label>
+			<label class="toggle-switch round">
+				<input type="checkbox" onchange="handleToggle(this)">
+				<span class="toggle-slider round"></span>
+			</label>
+		</div>			
             <script>
 
                 const mqttLink = "http://localhost:5008"
