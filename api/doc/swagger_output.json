@@ -46,7 +46,10 @@
   "paths": {
     "/bookings/recent": {
       "get": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to get the most recent booking.",
         "parameters": [],
         "responses": {
           "200": {
@@ -63,7 +66,10 @@
     },
     "/users": {
       "post": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to create a new user.",
         "parameters": [
           {
             "name": "body",
@@ -97,7 +103,10 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to get all users.",
         "parameters": [],
         "responses": {
           "200": {
@@ -126,7 +135,10 @@
     },
     "/users/{id}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to delete a user by ID.",
         "parameters": [
           {
             "name": "id",
@@ -154,7 +166,10 @@
     },
     "/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Endpoint to log in a user.",
         "parameters": [
           {
             "name": "body",
@@ -190,7 +205,10 @@
     },
     "/bookings": {
       "post": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to create a new booking.",
         "parameters": [
           {
             "name": "body",
@@ -227,7 +245,10 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to retrieve the three most recent bookings.",
         "parameters": [],
         "responses": {
           "200": {
@@ -244,7 +265,10 @@
     },
     "/bookings/{id}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to delete a booking by ID.",
         "parameters": [
           {
             "name": "id",
@@ -268,7 +292,10 @@
     },
     "/timetable": {
       "post": {
-        "description": "",
+        "tags": [
+          "Timetable"
+        ],
+        "description": "Endpoint to upload a timetable Excel file.",
         "parameters": [],
         "responses": {
           "200": {
@@ -280,7 +307,10 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "Timetable"
+        ],
+        "description": "Endpoint to retrieve the latest timetable in Excel format.",
         "produces": [
           null
         ],
@@ -300,7 +330,10 @@
     },
     "/feedback": {
       "post": {
-        "description": "",
+        "tags": [
+          "Feedback"
+        ],
+        "description": "Endpoint to save feedback.",
         "parameters": [
           {
             "name": "body",
@@ -331,7 +364,10 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "Feedback"
+        ],
+        "description": "Endpoint to retrieve all feedback data.",
         "parameters": [],
         "responses": {
           "200": {
@@ -348,7 +384,10 @@
     },
     "/feedback/{id}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "Feedback"
+        ],
+        "description": "Endpoint to delete a specific feedback.",
         "parameters": [
           {
             "name": "id",
@@ -372,7 +411,10 @@
     },
     "/bookings/all": {
       "get": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to retrieve all bookings.",
         "parameters": [],
         "responses": {
           "200": {
@@ -389,7 +431,10 @@
     },
     "/pdf/{bookingId}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "description": "Endpoint to retrieve the PDF file of a specific booking.",
         "parameters": [
           {
             "name": "bookingId",
@@ -413,7 +458,10 @@
     },
     "/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Endpoint to log out the current user.",
         "parameters": [],
         "responses": {
           "302": {

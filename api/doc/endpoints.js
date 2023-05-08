@@ -38,10 +38,11 @@ module.exports = function (app)
 
     
 
-    // #swagger.tags = ['Booking']
-    // #swagger.description = 'Endpoint to get the most recent booking.'
+  
     app.get('/bookings/recent', async (req, res) => {
         try {
+            // #swagger.tags = ['Booking']
+            // #swagger.description = 'Endpoint to get the most recent booking.'
             /* #swagger.responses[200] = { 
                 schema: { $ref: "#/definitions/Booking" },
                 description: 'The most recent booking.' 
@@ -57,9 +58,10 @@ module.exports = function (app)
         }
     });
 
-    // #swagger.tags = ['User']
-    // #swagger.description = 'Endpoint to create a new user.'
+
     app.post("/users", async (req, res) => {
+          // #swagger.tags = ['User']
+    // #swagger.description = 'Endpoint to create a new user.'
     try {
         const { name, email, password } = req.body;
         const newUser = new User({ name, email, password });
@@ -77,9 +79,10 @@ module.exports = function (app)
     }
     });
     
-    // #swagger.tags = ['User']
-    // #swagger.description = 'Endpoint to get all users.'
+
     app.get("/users", async (req, res) => {
+          // #swagger.tags = ['User']
+    // #swagger.description = 'Endpoint to get all users.'
         try {
         /* #swagger.responses[200] = { 
             schema: {
@@ -98,9 +101,10 @@ module.exports = function (app)
         }
     });
 
-    // #swagger.tags = ['User']
-    // #swagger.description = 'Endpoint to delete a user by ID.'
+
     app.delete("/users/:id", async (req, res) => {
+          // #swagger.tags = ['User']
+    // #swagger.description = 'Endpoint to delete a user by ID.'
         try {
         /* #swagger.parameters['id'] = { description: 'User ID.' } */
         const { id } = req.params;
@@ -123,10 +127,10 @@ module.exports = function (app)
         res.status(500).send(err);
         }
     });
-
-    // #swagger.tags = ['Authentication']
-    // #swagger.description = 'Endpoint to log in a user.'
+    
     app.post('/login', async (req, res) => {
+      // #swagger.tags = ['Authentication']
+      // #swagger.description = 'Endpoint to log in a user.'
         const { name, email, password } = req.body;
         try {
         const user = await User.findOne({ name, email, password });
@@ -151,10 +155,9 @@ module.exports = function (app)
         }
     });
   
-    // #swagger.tags = ['Products']
-    // #swagger.tags = ['Booking']
-    // #swagger.description = 'Endpoint to create a new booking.'
     app.post('/bookings', upload.single('pdfFile'), async (req, res) => {
+      // #swagger.tags = ['Booking']
+      // #swagger.description = 'Endpoint to create a new booking.'
         const { lh, teacherName, course, explanation } = req.body;
         const pdfFile = { data: req.file.buffer, contentType: req.file.mimetype };
     
@@ -174,9 +177,9 @@ module.exports = function (app)
         }
     });
   
-    // #swagger.tags = ['Booking']
-    // #swagger.description = 'Endpoint to delete a booking by ID.'
     app.delete('/bookings/:id', async (req, res) => {
+      // #swagger.tags = ['Booking']
+      // #swagger.description = 'Endpoint to delete a booking by ID.'
         const id = req.params.id;
     
         try {
@@ -202,9 +205,9 @@ module.exports = function (app)
         }
     });
 
-    // #swagger.tags = ['Timetable']
+    app.post('/timetable', upload.single('file'), async (req, res) => {
+  // #swagger.tags = ['Timetable']
 // #swagger.description = 'Endpoint to upload a timetable Excel file.'
-app.post('/timetable', upload.single('file'), async (req, res) => {
     try {
       const newExcel = new Excel({
         excelFile: {
@@ -229,11 +232,11 @@ app.post('/timetable', upload.single('file'), async (req, res) => {
   });
   
   
-    // #swagger.tags = ['Feedback']
-    // #swagger.description = 'Endpoint to save feedback.'
-
-    // Handle the POST request to /feedback
-    app.post('/feedback', async (req, res) => {
+  app.post('/feedback', async (req, res) => {
+      // #swagger.tags = ['Feedback']
+      // #swagger.description = 'Endpoint to save feedback.'
+  
+      // Handle the POST request to /feedback
         try {
         // Create a new feedback object from the request body
         const feedback = new Feedback({
@@ -258,11 +261,11 @@ app.post('/timetable', upload.single('file'), async (req, res) => {
         }
     });
   
-    // #swagger.tags = ['Feedback']
+    app.get('/feedback', async (req, res) => {
+  // #swagger.tags = ['Feedback']
 // #swagger.description = 'Endpoint to retrieve all feedback data.'
 
 // Handle GET request to /feedback to retrieve all feedback data
-app.get('/feedback', async (req, res) => {
     try {
       const feedback = await Feedback.find();
       /* #swagger.responses[200] = {
@@ -281,11 +284,11 @@ app.get('/feedback', async (req, res) => {
     }
   });
   
+  app.delete('/feedback/:id', async (req, res) => {
   // #swagger.tags = ['Feedback']
 // #swagger.description = 'Endpoint to delete a specific feedback.'
 
 // Handle DELETE request to /feedback/:id to delete a specific feedback
-app.delete('/feedback/:id', async (req, res) => {
     try {
       const feedback = await Feedback.findByIdAndDelete(req.params.id);
       if (!feedback) {
@@ -307,11 +310,11 @@ app.delete('/feedback/:id', async (req, res) => {
     }
   });
   
+  app.get('/bookings', async function(req, res) {
   // #swagger.tags = ['Booking']
 // #swagger.description = 'Endpoint to retrieve the three most recent bookings.'
 
 // Get the three most recent bookings
-app.get('/bookings', async function(req, res) {
 	try {
 		const bookings = await Booking.find().sort({createdDate: -1}).limit(3).exec();
 		/* #swagger.responses[200] = {
@@ -329,12 +332,12 @@ app.get('/bookings', async function(req, res) {
 		res.status(500).send('Error retrieving bookings');
 	}
 });
-
-// #swagger.tags = ['Booking']
-// #swagger.description = 'Endpoint to retrieve all bookings.'
-
-// Get all bookings
 app.get('/bookings/all', async (req, res) => {
+  
+  // #swagger.tags = ['Booking']
+  // #swagger.description = 'Endpoint to retrieve all bookings.'
+  
+  // Get all bookings
     try {
       const bookings = await Booking.find().sort({createdDate: -1}).exec();
       /* #swagger.responses[200] = {
@@ -353,10 +356,10 @@ app.get('/bookings/all', async (req, res) => {
     }
   });
 
+  
+  app.get('/pdf/:bookingId', async function(req, res) {
   // #swagger.tags = ['Booking']
 // #swagger.description = 'Endpoint to retrieve the PDF file of a specific booking.'
-
-app.get('/pdf/:bookingId', async function(req, res) {
     try {
       const booking = await Booking.findById(req.params.bookingId);
       if (!booking || !booking.pdfFile || booking.pdfFile.contentType !== 'application/pdf') {
@@ -380,10 +383,10 @@ app.get('/pdf/:bookingId', async function(req, res) {
     }
   });
   
+  
+  app.get('/timetable', async (req, res) => {
   // #swagger.tags = ['Timetable']
 // #swagger.description = 'Endpoint to retrieve the latest timetable in Excel format.'
-
-app.get('/timetable', async (req, res) => {
     try {
       const excel = await Excel.findOne().sort('-createdAt').exec();
       if (!excel) {
@@ -408,11 +411,11 @@ app.get('/timetable', async (req, res) => {
     }
   });
 
-  // #swagger.tags = ['Auth']
+  app.get('/logout', (req, res) => {
+  // #swagger.tags = ['Authentication']
 // #swagger.description = 'Endpoint to log out the current user.'
 
 // Logout endpoint
-app.get('/logout', (req, res) => {
     req.logout((err) => {
       if (err) {
         /* #swagger.responses[500] = {
